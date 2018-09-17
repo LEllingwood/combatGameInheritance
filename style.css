@@ -1,0 +1,53 @@
+/* #fruitImage {
+    background-image: url("fruitsFighting.jpg");
+    height: 160px;
+    background-repeat: no-repeat;
+} */
+
+/* 
+
+/* #fruitImage {
+    background-image: url("fruitsFighting.jpg");
+    height: 160px;
+    background-repeat: no-repeat;
+} */
+
+/* #pickleImage {
+    background-image: url("pickleFightingCorn.png");
+    height: 160px;
+    background-repeat: no-repeat;
+} */
+
+#vegetablesFight {
+    background-image: url("vegetablesFighting.jpeg");
+    height: 238px;
+    background-repeat: repeat;
+}
+
+#fruitImage2 {
+    background-image: url("fruitFighting2.jpg");
+    height: 160px;
+}
+
+h1 {
+    font-size: 100px;
+    margin-left: 35%;
+    color: red;
+    text-shadow: 1px 4px 4px black;
+    margin-bottom: 1%;
+}
+
+#displayResults {
+    white-space: pre-line;
+}
+
+#startFight{
+    height: 5ch;
+    width: 10ch;
+    font-size: xx-large;
+    background-color: red;
+    color: white;
+    text-shadow: 1px 4px 4px black;
+    margin-left: 43%;
+    margin-top: 3%;
+}
