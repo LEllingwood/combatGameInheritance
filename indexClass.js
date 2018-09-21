@@ -1,16 +1,6 @@
 let question = prompt("Do you want to be a Strawberry or a Banana?");
 const displayResults = document.getElementById("displayResults")
 
-class Fruit {
-    constructor(options) {
-        Food.call(this, options)
-        this.nickname = options.nickname,
-
-            Fruit.prototype = Object.create(Food.prototype)
-        Fruit.prototype.constructor = Fruit
-
-    }
-}
 
 class Food {
     constructor(options) {
@@ -26,7 +16,7 @@ class Food {
             this.moveUsed = ""
     }
 
-    Fruit.prototype.combust = function (fruit) {
+    combust(fruit) {
         const fireDamage = Math.random() < this.chanceToBlowUp ?
             this.baseDamage * 2 :
             this.baseDamage
@@ -35,7 +25,7 @@ class Food {
         this.damageDealt = fireDamage
     }
 
-    Fruit.prototype.rot = function (fruit) {
+    rot(fruit) {
         const rotDamage = Math.random() < this.chanceToRot ?
             this.baseDamage * 3 :
             this.baseDamage
@@ -44,7 +34,7 @@ class Food {
         this.damageDealt = rotDamage
     }
 
-    Fruit.prototype.cannibalize = function (fruit) {
+    cannibalize(fruit) {
         const cannibalDamage = Math.random() <
             this.chanceToCannibalize ?
             this.baseDamage * 2 :
@@ -54,46 +44,55 @@ class Food {
         this.damageDealt = cannibalDamage
     }
 }
-Fruit.prototype.foodFight = function (...fruits) {
 
-    fruits.forEach(fruit => {
+class Fruit extends Food{
+    constructor(options) {
+        super(options)
+        this.nickname = options.nickname
+    }
 
-        while (this.maxFreshness > 0 && fruit.maxFreshness > 0) {
-            let rollofDice = Math.random()
-            if (rollofDice < .3) {
-                this.rot(fruit)
-                fruit.rot(this)
-            } else if ((rollofDice >= .3 && rollofDice < .6)) {
-                fruit.combust(this)
-                this.combust(fruit)
-            } else {
-                fruit.cannibalize(this)
-                this.cannibalize(fruit)
+    foodFight(...fruits) {
+    
+        fruits.forEach(fruit => {
+            while (this.maxFreshness > 0 && fruit.maxFreshness > 0) {
+                let rollofDice = Math.random()
+                if (rollofDice < .3) {
+                    this.rot(fruit)
+                    fruit.rot(this)
+                } else if ((rollofDice >= .3 && rollofDice < .6)) {
+                    fruit.combust(this)
+                    this.combust(fruit)
+                } else {
+                    fruit.cannibalize(this)
+                    this.cannibalize(fruit)
+                }
+                displayResults.textContent = displayResults.textContent + (`\r\n Your  ${this.name} used ${this.moveUsed} and dealt ${this.damageDealt} damage to ${fruit.name}`)
+                displayResults.textContent = displayResults.textContent + (`\r\n ${fruit.name} used ${fruit.moveUsed} and dealt ${fruit.damageDealt} damage to ${this.name}`)
             }
-
-            displayResults.textContent = displayResults.textContent + (`\r\n Your  ${this.name} used ${this.moveUsed} and dealt ${this.damageDealt} damage to ${fruit.name}`)
-            displayResults.textContent = displayResults.textContent + (`\r\n ${fruit.name} used ${fruit.moveUsed} and dealt ${fruit.damageDealt} damage to ${this.name}`)
-
-        }
-    console.log("after while loop", this, fruit)
-
-    const strawberry = new Fruit({
-        name: "Sissy Strawberry",
-        maxFreshness: 1000,
-    })
-
-    const banana = new Fruit({
-        name: "Bad Ass Banana",
-        maxFreshness: 800,
-        chanceToRot: 60,
-    })
+            console.log("after while loop", this, fruit)
+        })
+    
+    }
+}
 
 
-let startButton = document.getElementById("startFight")
+const strawberry = new Fruit({
+            name: "Sissy Strawberry",
+            maxFreshness: 1000,
+        })
+    
+        const banana = new Fruit({
+            name: "Bad Ass Banana",
+            maxFreshness: 800,
+            chanceToRot: 60,
+        })
 
+
+let startButton = document.getElementById("startFight");
 if (question === "banana" || question === "Banana") {
     startButton.addEventListener("click", () => banana.foodFight(strawberry))
 } else if (question === "strawberry" || question === "Strawberry") {
     startButton.addEventListener("click", () => strawberry.foodFight(banana))
 } else {
     alert("I SAID PICK STRAWBERRY OR BANANA!!")
+}
